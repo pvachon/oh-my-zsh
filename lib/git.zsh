@@ -1,10 +1,21 @@
 # Outputs current branch info in prompt format
 function git_prompt_info() {
   local ref
+
+  # Check if this actually is a git repo
+  git rev-parse --is-inside-work-tree 2>&1 > /dev/null
+  if [[ $? == 128 ]]; then
+    return 0
+  fi
+
+  # Check if we've been told to not show the full status for this repo
   if [[ "$(command git config --get oh-my-zsh.hide-status 2>/dev/null)" != "1" ]]; then
-    ref=$(command git symbolic-ref HEAD 2> /dev/null) || \
-    ref=$(command git rev-parse --short HEAD 2> /dev/null) || return 0
+    ref=$(command git symbolic-ref HEAD 2> /dev/null) ||
+        $(command git rev-parse --short HEAD 2> /dev/null) || return 0
     echo "$ZSH_THEME_GIT_PROMPT_PREFIX${ref#refs/heads/}$(parse_git_dirty)$ZSH_THEME_GIT_PROMPT_SUFFIX"
+  else
+      # At least show this is a git repo
+      echo "${ZSH_THEME_GIT_PROMPT_PREFIX}status hidden${ZSH_THEME_GIT_PROMPT_SUFFIX}"
   fi
 }
 
