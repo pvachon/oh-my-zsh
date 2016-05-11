@@ -3,7 +3,7 @@ function git_prompt_info() {
   local ref
 
   # Check if this actually is a git repo
-  git rev-parse --is-inside-work-tree 2> /dev/null
+  git rev-parse --is-inside-work-tree 2> /dev/null 1> /dev/null
   if [[ $? == 128 ]]; then
     return 0
   fi
