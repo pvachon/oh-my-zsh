@@ -13,7 +13,7 @@ export VIRTUAL_ENV_DISABLE_PROMPT=1
 
 # Generate the prompt based on the current state of affairs
 function prompt_func() {
-    _prompt_error_code="%(?..%{$fg_bold[red]%}terminated with code %?
+    _prompt_error_code="%(?..%{$fg_bold[red]%}✘ terminated with code %?
 %{$reset_color%})"
     _prompt_date='%D{%Y-%m-%d %H:%M:%S}'
     _prompt_left="%{$fg_bold[$NCOLOR]%}%n%{$fg[magenta]%}@%m:%{$fg_bold[blue]%}%~%{$reset_color%}"
@@ -42,6 +42,6 @@ function virtualenv_prompt_info() {
 }
 
 PROMPT='$(prompt_func)
-> '
+➜ '
 RPROMPT='$(git_prompt_info)$(virtualenv_prompt_info)'
 
